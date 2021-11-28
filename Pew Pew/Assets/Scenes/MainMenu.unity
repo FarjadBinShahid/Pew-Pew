@@ -1885,10 +1885,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySelectedCharacter: 0
   allCharacters:
-  - {fileID: 3177310890536230000, guid: 0619933388de5c945b8e2a247b122867, type: 3}
-  - {fileID: 3177310890536230000, guid: 85f991e957fcd7a479b5a3e717dd1d45, type: 3}
-  - {fileID: 3177310890536230000, guid: fdf6c0feea071cd4a9da4044d87800b3, type: 3}
-  - {fileID: 3177310890536230000, guid: 0fd65532179e77e41b3cf7fa0020100a, type: 3}
+  - {fileID: 4600192116394401008, guid: 2f8d9d86d6fe072468f13608da927ec9, type: 3}
+  - {fileID: 4600192116394401008, guid: d6809d6bdbe3dbc4fa4af7c8ca6d7150, type: 3}
+  - {fileID: 4600192116394401008, guid: 8e2291b3722c9b445b7c6da97ef882c2, type: 3}
+  - {fileID: 4600192116394401008, guid: 8ab6c0e0b4455c340978453398c05e87, type: 3}
 --- !u!4 &1617963336
 Transform:
   m_ObjectHideFlags: 0

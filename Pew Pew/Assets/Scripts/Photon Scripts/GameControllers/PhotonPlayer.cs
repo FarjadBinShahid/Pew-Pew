@@ -7,7 +7,7 @@ using UnityEngine;
 public class PhotonPlayer : MonoBehaviour
 {
     private PhotonView PV;
-    public GameObject myAvatar;
+    private GameObject myAvatar;
 
     // Start is called before the first frame updatee
     void Start()

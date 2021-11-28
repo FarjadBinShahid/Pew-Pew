@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AvatarSetup : MonoBehaviour
 {
+    public int playerHealth;
+    public int playerDamage;
     private PhotonView PV;
     public GameObject myCharacter;
     public int characterValue;
