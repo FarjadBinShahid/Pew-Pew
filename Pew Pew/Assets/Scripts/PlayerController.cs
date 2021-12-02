@@ -7,6 +7,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
 
+    [SerializeField] Camera cameraHolder;
     [SerializeField] Item[] items;
     int itemIndex;
     int previousItemIndex = -1;
@@ -34,10 +35,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     float mouseY;
     float xRotation;
     public float mouseSensitivity = 200;
+
+    float verticalLookRotation;
+
+    PlayerManager playerManager;
     
     void Awake()
     {
         PV = GetComponent<PhotonView>();
+        playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
 
     void Start()
@@ -61,7 +67,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
         }
         Movement();
-
+        MouseRotate();
+                
+        
+        
+        
         // for(int i=0 ; i<=items.Length; i++)
         // {
         //     if(Input.GetKeyDown((i+1).ToString()))
@@ -87,13 +97,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if(!PV.IsMine)
         {
             return;
         }
-        MouseRotate();
+
+        if(transform.position.y < -10f)
+        {
+            Die();
+        }
+
+        
+        //MouseRotate();
     }
 
     void Movement()
@@ -124,14 +141,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     void MouseRotate()
     {
-        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        transform.Rotate(Vector3.up * mouseX);
+        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity* Time.deltaTime);
+        verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity* Time.deltaTime;
+        verticalLookRotation = Mathf.Clamp(verticalLookRotation, -90, 90);
         
-        mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-    
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation , -75, 75);
-        items[itemIndex].transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
+
     }
 
     void EquipItem(int _index)
@@ -178,8 +193,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     void RPC_TakeDamage(float damage)
     {
+        Debug.Log("Took Damage " + damage);
         if(!PV.IsMine)
         {
+            Debug.Log("asdasd");
             return;
         }
         currentHealth -=damage;
@@ -187,11 +204,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             Die();
         }
-        Debug.Log("Took Damage " + damage);
+        
     }
 
     void Die()
     {
-
+        playerManager.Die();
     }
 }
